@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Fuction to display usage instructions
+# Function to display usage instructions
 usage() {
     echo "Usage: $0 --new-name=NEW_NAME --new-email=NEW_EMAIL --old-name=OLD_NAME --old-email=OLD_EMAIL --branch=BRANCH [PATH]"
     exit 1
@@ -9,7 +9,7 @@ usage() {
 # Initialize input variables
 OLD_NAME="*"
 OLD_EMAIL="*"
-NEW_NAME=""
+NEW_NAME="" 
 NEW_EMAIL=""
 BRANCH="*"
 PATH_DIR=""
@@ -34,7 +34,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 # Validate input variables
-if [ -z "$NEW_NAME" ] || [ -z "$NEW_EMAIL" ]; then
+if [ -z "$NEW_NAME" ] && [ -z "$NEW_EMAIL" ]; then
     usage
 fi
 
@@ -73,7 +73,7 @@ modify_author() {
 if [ "$BRANCH" == "*" ]; then
     for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
         git checkout "$branch"
-        if [ $? -ne 0 ]; then
+        if ! command; then
             echo "Error: Could not checkout branch $branch"
             exit 1
         fi
