@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Author Modifier - A script to modify Git commit author information
+# Usage: See the usage() function below or run with no arguments
+
 # Function to display usage instructions
 usage() {
     echo "Usage: $0 [OPTIONS] [PATH]"
@@ -13,17 +16,29 @@ usage() {
     echo
     echo "PATH:                      Repository directory (optional, default: current directory)"
     echo
+    echo "Examples:"
+    echo "  $0 --new-name=\"New Name\" --new-email=\"new@email.com\" /path/to/repo"
+    echo "  $0 --new-name=\"New Name\" --old-email=\"old@email.com\""
+    echo "  $0 --new-email=\"new@email.com\" --old-name=\"Old Name\""
+    echo
     echo "Note: You must provide at least one of --new-name or --new-email."
     exit 1
 }
 
+# Function to log messages with timestamp
+log() {
+    local level=$1
+    local message=$2
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $message"
+}
+
 # Initialize input variables
-OLD_NAME="*"
-OLD_EMAIL="*"
-NEW_NAME="" 
-NEW_EMAIL=""
-BRANCH="*"
-PATH_DIR=""
+OLD_NAME="*"        # Default: match all names
+OLD_EMAIL="*"       # Default: match all emails
+NEW_NAME=""         # No default, optional if NEW_EMAIL provided
+NEW_EMAIL=""        # No default, optional if NEW_NAME provided
+BRANCH="*"          # Default: process all branches
+PATH_DIR=""         # Default: current directory
 
 # Parse input variables
 while [ "$#" -gt 0 ]; do
@@ -38,6 +53,7 @@ while [ "$#" -gt 0 ]; do
                 PATH_DIR="$1"
                 shift
             else
+                log "ERROR" "Unknown parameter: $1"
                 usage
             fi
             ;;
