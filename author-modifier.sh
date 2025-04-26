@@ -2,7 +2,18 @@
 
 # Function to display usage instructions
 usage() {
-    echo "Usage: $0 --new-name=NEW_NAME --new-email=NEW_EMAIL --old-name=OLD_NAME --old-email=OLD_EMAIL --branch=BRANCH [PATH]"
+    echo "Usage: $0 [OPTIONS] [PATH]"
+    echo
+    echo "OPTIONS:"
+    echo "  --new-name=NEW_NAME      New author name (required if --new-email not provided)"
+    echo "  --new-email=NEW_EMAIL    New author email (required if --new-name not provided)"
+    echo "  --old-name=OLD_NAME      Old author name to replace (default: '*' for all names)"
+    echo "  --old-email=OLD_EMAIL    Old author email to replace (default: '*' for all emails)"
+    echo "  --branch=BRANCH          Git branch to modify (default: '*' for all branches)"
+    echo
+    echo "PATH:                      Repository directory (optional, default: current directory)"
+    echo
+    echo "Note: You must provide at least one of --new-name or --new-email."
     exit 1
 }
 
